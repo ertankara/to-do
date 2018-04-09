@@ -150,6 +150,15 @@ body {
   font-size: 1.3em;
   display: block;
   line-height: 1.45em;
+}
+
+
+.task:hover {
+  background-color: #ff884f;
+}
+
+
+.done-task {
   text-decoration: line-through;
 }
 
