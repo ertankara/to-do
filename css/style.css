@@ -1,5 +1,7 @@
 @media screen and (min-width: 500px) {
-  .add-task-field {
+  .add-task-field,
+  .added-tasks-cover,
+  .timer {
     max-width: 500px;
     margin-right: auto;
     margin-left: auto;
@@ -21,7 +23,7 @@
 html, body {
   height: 100%;
   width: 100%;
-  font-family: sans-serif;
+  font-family: 'Gudea', sans-serif;
 }
 
 
@@ -43,12 +45,10 @@ body {
 
 
 .modal-content {
-  position: relative;
   top: 100px;
   width: 300px;
   height: 200px;
   background-color: #fff;
-  margin: auto;
   padding: 20px;
 }
 
@@ -65,22 +65,41 @@ body {
 /* MODAL END */
 
 
-/* ADD TASK BEGIN */
 
-.add-task-field {
+
+/* COMMON BEGIN */
+
+.center-common {
   position: relative;
-  top: 6%;
-  width: 90%;
-  height: 150px;
   margin: auto;
 }
 
 
+.shadow {
+  -webkit-box-shadow: 10px 10px 19px 0px rgba(0,0,0,0.75);
+  -moz-box-shadow: 10px 10px 19px 0px rgba(0,0,0,0.75);
+  box-shadow: 10px 10px 19px 0px rgba(0,0,0,0.75);
+}
+
+/* COMMON END */
+
+
+
+
+/* ADD TASK BEGIN */
+
+.add-task-field {
+  top: 4%;
+  width: 90%;
+  height: 150px;
+}
+
+
 .add-task-cover {
-  background-color: #ff884f;
+  background: linear-gradient(#bbb, #fff);
   height: 100%;
   width: 100%;
-  padding: 20px;
+  padding: 10px;
 }
 
 
@@ -95,29 +114,44 @@ body {
 
 
 .add-task-input {
-  background-color: #ffd343;
-  border: 1px solid #ff884f;
+  background-color: #eee;
+  border: 1px solid #fff;
   padding: 15px;
 }
 
 
 .add-task-button {
-  background-color: #fff343;
+  background-color: #ddd;
 }
 
 
-.add-task-button {
-  background-color: #fff343;
-}
-
-
-.add-task-input:focus, .add-task-button:focus {
-  border-color: #f55;
+.add-task-input:focus {
+  border-color: #ff884f;
 }
 
 /* ADD TASK END */
 
 
 /* ADDED TASKS BEGIN */
+
+.added-tasks-cover {
+  top: 12%;
+  width: 90%;
+  min-height: 55vh;
+  max-height: 400px;
+  padding: 35px;
+  background: linear-gradient(#ccc, #fff);
+  overflow-y: auto;
+}
+
+
+.task {
+  color: #555;
+  font-size: 1.3em;
+  display: block;
+  line-height: 1.45em;
+  text-decoration: line-through;
+}
+
 
 /* ADDED TASKS END */

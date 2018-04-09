@@ -4,32 +4,41 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link href="https://fonts.googleapis.com/css?family=Gudea" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css">
   <title>Todo List</title>
 </head>
 <body>
-  <!-- MODAL -->
-  <div class="modal">
-    <div class="modal-content">
-      <input class="clock-input" type="text" name="clock" id="clock-min" placeholder="minutes">
-      <input class="clock-input" type="text" name="clock" id="clock-sec" placeholder="seconds">
-      <button class="clock-input" id="set-timer">Set</button>
+    <!-- MODAL -->
+    <div class="modal">
+      <div class="modal-content center-common">
+        <input class="clock-input" type="text" name="clock" id="clock-min" placeholder="minutes">
+        <input class="clock-input" type="text" name="clock" id="clock-sec" placeholder="seconds">
+        <button class="clock-input" id="set-timer">Set</button>
+      </div>
     </div>
-  </div>
-  <!-- MODAL -->
+    <!-- MODAL -->
 
-  <!-- ADD TASK -->
-  <div class="add-task-field">
-    <div class="add-task-cover">
-      <input class="add-task-inputs-common add-task-input" type="text" name="add-task" id="add-task">
-      <button class="add-task-inputs-common add-task-button">Add Task</button>
+    <!-- ADD TASK BEGIN -->
+    <div class="add-task-field shadow center-common">
+      <div class="add-task-cover center-common">
+        <input class="add-task-inputs-common add-task-input" type="text" name="add-task" id="add-task">
+        <button id="add-task-button" class="add-task-inputs-common add-task-button">Add Task</button>
+
+        <button class="add-task-inputs-common add-task-button">
+          <img src="img/clock.svg" alt="" width="20px" height="20px">
+        </button>
+      </div>
     </div>
-  </div>
-  <!-- ADD TASKS -->
+    <!-- ADD TASKS END -->
 
-
-  <!-- ADDED TASKS -->
-  <!-- ADDED TASKS -->
+    <!-- ADDED TASKS BEGIN -->
+    <div id="task-container" class="added-tasks-cover shadow center-common">
+      <span class="task">1- O lfdsaf sdafı</span>
+      <span class="task">2- O lalala</span>
+      <span class="task">3- O lalala</span>
+    </div>
+    <!-- ADDED TASKS END -->
 
   <script src="js/main.js"></script>
 </body>
