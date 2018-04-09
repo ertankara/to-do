@@ -1,3 +1,12 @@
+@media screen and (min-width: 500px) {
+  .add-task-field {
+    max-width: 500px;
+    margin-right: auto;
+    margin-left: auto;
+  }
+}
+
+
 * {
   padding: 0;
   margin: 0;
@@ -16,6 +25,10 @@ html, body {
 }
 
 
+body {
+  background: linear-gradient(#1C47AA, #ccc);
+}
+
 /* MODAL BEGIN */
 
 .modal {
@@ -25,13 +38,13 @@ html, body {
   width: 100%;
   height: 100%;
   background-color: rgb(0, 0, 0); /* Fallback color */
-  background-color: rgba(0,0,0, 0.6);
+  background-color: rgba(0,0,0, 0.8);
 }
 
 
 .modal-content {
   position: relative;
-  top: 200px;
+  top: 100px;
   width: 300px;
   height: 200px;
   background-color: #fff;
@@ -50,3 +63,61 @@ html, body {
 }
 
 /* MODAL END */
+
+
+/* ADD TASK BEGIN */
+
+.add-task-field {
+  position: relative;
+  top: 6%;
+  width: 90%;
+  height: 150px;
+  margin: auto;
+}
+
+
+.add-task-cover {
+  background-color: #ff884f;
+  height: 100%;
+  width: 100%;
+  padding: 20px;
+}
+
+
+.add-task-inputs-common {
+  width: 100%;
+  height: 35px;
+  border-radius: 10px;
+  font-size: 1.09em;
+  margin: 10px auto;
+  display: block;
+}
+
+
+.add-task-input {
+  background-color: #ffd343;
+  border: 1px solid #ff884f;
+  padding: 15px;
+}
+
+
+.add-task-button {
+  background-color: #fff343;
+}
+
+
+.add-task-button {
+  background-color: #fff343;
+}
+
+
+.add-task-input:focus, .add-task-button:focus {
+  border-color: #f55;
+}
+
+/* ADD TASK END */
+
+
+/* ADDED TASKS BEGIN */
+
+/* ADDED TASKS END */
