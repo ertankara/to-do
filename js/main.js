@@ -3,6 +3,19 @@ const $addTaskButton = document.querySelector('#add-task-button');
 const $taskContainer = document.querySelector('#task-container');
 let $tasks = [...document.querySelectorAll('.task')];
 
+window.onload = () => {
+  if (localStorage && localStorage.getItem('task-0')) {
+    let taskPrinterCount = 0;
+    while (localStorage.getItem(`task-${taskPrinterCount}`)) {
+      const newEl = document.createElement('span');
+      newEl.classList.add('task');
+      newEl.textContent = localStorage.getItem(`task-${taskPrinterCount}`);
+      $taskContainer.appendChild(newEl);
+      taskPrinterCount++;
+    }
+  }
+}
+
 function addTask() {
   "use strict";
   const task = $addTaskInput.value;
@@ -26,6 +39,9 @@ function addTask() {
   $taskContainer.appendChild(newEl);
 
   $addTaskInput.value = "";
+
+  // Call taskAdded function to add task to the localStorage
+  taskAdded(task);
 }
 
 
