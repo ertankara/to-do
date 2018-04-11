@@ -14,7 +14,7 @@ function addTask() {
   "use strict";
   const task = new Task($addTaskInput.value);
   // Check if it has valid length
-  if (task.taskText.length > 50) {
+  if (task.taskText.length > 70) {
     return;
   }
 
