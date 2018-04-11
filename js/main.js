@@ -3,24 +3,20 @@ const $addTaskButton = document.querySelector('#add-task-button');
 const $taskContainer = document.querySelector('#task-container');
 let $tasks = [...document.querySelectorAll('.task')];
 
-window.onload = () => {
-  if (localStorage && localStorage.getItem('task-0')) {
-    let taskPrinterCount = 0;
-    while (localStorage.getItem(`task-${taskPrinterCount}`)) {
-      const newEl = document.createElement('span');
-      newEl.classList.add('task');
-      newEl.textContent = localStorage.getItem(`task-${taskPrinterCount}`);
-      $taskContainer.appendChild(newEl);
-      taskPrinterCount++;
-    }
+class Task {
+  constructor(taskText, isCrossed = false) {
+    this.taskText = taskText;
+    this.isCrossed = isCrossed;
   }
 }
 
+
 function addTask() {
   "use strict";
-  const task = $addTaskInput.value;
+  //const task = $addTaskInput.value;
+  const task = new Task($addTaskInput.value);
   // Check if it has valid length
-  if (task.length > 50) {
+  if (task.taskText.length > 50) {
     return;
   }
 
@@ -33,7 +29,7 @@ function addTask() {
   // Create a span to store task
   const newEl = document.createElement('span');
   // Append the increasing number to the task
-  newEl.textContent = numberOfTasks + '- ' + task;
+  newEl.textContent = numberOfTasks + '- ' + task.taskText;
   newEl.classList.add('task');
 
   $taskContainer.appendChild(newEl);
@@ -48,10 +44,26 @@ function addTask() {
 
 $taskContainer.addEventListener('click', event => {
   if (event.target.nodeName === 'SPAN') {
+    const taskArray = JSON.parse(localStorage.getItem('all-tasks'));
     if (!event.target.className.match(/done-task/g)) {
       event.target.classList.add('done-task');
+      for (let i = 0; i < taskArray.length; i++) {
+        // event.target.textContent.replace(/[^a-zA-Z ]/g, '').trim
+        if (event.target.textContent.replace(/[0-9]- /g, '') ===  taskArray[i].taskText) {
+          taskArray[i].isCrossed = true;
+          break;
+        }
+      }
+      localStorage.setItem('all-tasks', JSON.stringify(taskArray));
     } else {
       event.target.classList.remove('done-task');
+      for (let i = 0; i < taskArray.length; i++) {
+        if (event.target.textContent.replace(/[0-9]- /g, '') === taskArray[i].taskText) {
+          taskArray[i].isCrossed = false;
+          break;
+        }
+      }
+      localStorage.setItem('all-tasks', JSON.stringify(taskArray));
     }
   }
 });
@@ -67,4 +79,3 @@ document.addEventListener('keydown', event => {
     addTask();
   }
 });
-
