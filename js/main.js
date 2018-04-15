@@ -1,6 +1,7 @@
 const $addTaskInput = document.querySelector('#add-task');
 const $addTaskButton = document.querySelector('#add-task-button');
 const $taskContainer = document.querySelector('#task-container');
+const $renewListButton = document.querySelector('#renew-list-button');
 
 class Task {
   constructor(taskText, isCrossed = false) {
@@ -12,8 +13,14 @@ class Task {
 
 function addTask() {
   "use strict";
-  // Check if it has valid length
-  if ($addTaskInput.length > 70) {
+
+  // Check if it has valid length and if the number of tasks don't have more than 9 items
+  if (
+    localStorage.getItem('all-tasks') &&
+    JSON.parse(localStorage.getItem('all-tasks')).length >= 9 ||
+    $addTaskInput.length > 70
+  ) {
+    $addTaskInput.value = "";
     return;
   }
 
@@ -37,6 +44,15 @@ function addTask() {
 
   // Call taskAdded function to add task to the localStorage
   taskAdded(task);
+  taskCounter++;
+
+  if (taskCounter >= 9) {
+    $renewListButton.style.display = 'block';
+  }
+
+  if (localStorage && !localStorage.getItem('starting-time')) {
+    startTimer();
+  }
 }
 
 
@@ -52,7 +68,7 @@ $taskContainer.addEventListener('click', event => {
       event.target.classList.add('done-task');
       // And also mark it as crossed so on page reload it will remain crossed over
       for (let i = 0; i < taskArray.length; i++) {
-        if (event.target.textContent.replace(/[0-9]- /g, '') ===  taskArray[i].taskText) {
+        if (event.target.textContent.replace(/[0-9]- /g, '') === taskArray[i].taskText) {
           taskArray[i].isCrossed = true;
           break;
         }
@@ -73,6 +89,20 @@ $taskContainer.addEventListener('click', event => {
       localStorage.setItem('all-tasks', JSON.stringify(taskArray));
     }
   }
+});
+
+// If more than 9 items are added
+$renewListButton.addEventListener('click', () => {
+  taskCounter = 0;
+  localStorage.removeItem('all-tasks');
+  localStorage.removeItem('starting-time');
+  // while ($taskContainer.lastElementChild && $taskContainer.lastElementChild.nodeName !== 'BUTTON') {
+  //   $taskContainer.lastElementChild.remove();
+  // }
+  while ($taskContainer.firstElementChild) {
+    $taskContainer.firstElementChild.remove();
+  }
+  $renewListButton.style.display = 'none';
 });
 
 // Click event for the button
