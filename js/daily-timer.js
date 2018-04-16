@@ -5,6 +5,7 @@ const $modalMinutes = $modal.querySelector('#modal-minutes');
 const $modalCloseButton = $modal.querySelector('#close-button');
 
 
+let interval;
 function startTimer() {
   const miliSecondsInADay = 86400 * 1000;
 
@@ -26,7 +27,7 @@ function startTimer() {
   // Update the timer visually
   updateTimer(endingTime - now);
 
-  let interval = setInterval(() => {
+  interval = setInterval(() => {
     // Get current time
     now = new Date().getTime();
     // Get how much time left between now and ending date
@@ -40,7 +41,7 @@ function startTimer() {
       localStorage.removeItem('starting-time');
       localStorage.removeItem('all-tasks');
     }
-  }, 40000);
+  }, 6000);
 }
 
 

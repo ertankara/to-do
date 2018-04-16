@@ -96,13 +96,13 @@ $renewListButton.addEventListener('click', () => {
   taskCounter = 0;
   localStorage.removeItem('all-tasks');
   localStorage.removeItem('starting-time');
-  // while ($taskContainer.lastElementChild && $taskContainer.lastElementChild.nodeName !== 'BUTTON') {
-  //   $taskContainer.lastElementChild.remove();
-  // }
   while ($taskContainer.firstElementChild) {
     $taskContainer.firstElementChild.remove();
   }
   $renewListButton.style.display = 'none';
+
+  updateTimer(0); // Call function with totalMiliSeconds set to 0
+  clearInterval(interval);
 });
 
 // Click event for the button
