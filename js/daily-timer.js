@@ -15,7 +15,7 @@ $minutes.addEventListener('keydown', handlerForModalInput);
 
 function handlerForModalInput(event) {
   if (
-    event.keyCode === 27 &&
+    event.keyCode === 13 &&
     (document.activeElement === $hours ||
       document.activeElement === $minutes)
   ) {
@@ -112,8 +112,12 @@ function startTimer(hours, minutes) {
     if (endingTime - now <= 0) {
       clearInterval(interval);
       checkState();
-      localStorage.removeItem('starting-time');
-      localStorage.removeItem('all-tasks');
+      $renewListButton.style.display = 'none';
+      localStorage.clear();
+      taskCounter = 0;
+      while ($taskContainer.firstElementChild) {
+        $taskContainer.firstElementChild.remove();
+      }
     }
   }, 6000);
 }
@@ -138,7 +142,6 @@ function checkState() {
     return;
   }
   const taskList = JSON.parse(localStorage.getItem('all-tasks'));
-  $renewListButton.style.display = 'block';
 
   for (let i = 0; i < taskList.length; i++) {
     if (!taskList[i].isCrossed) {

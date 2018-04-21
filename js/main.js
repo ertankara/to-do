@@ -96,8 +96,7 @@ $taskContainer.addEventListener('click', event => {
 // If more than 9 items are added
 $renewListButton.addEventListener('click', () => {
   taskCounter = 0;
-  localStorage.removeItem('all-tasks');
-  localStorage.removeItem('starting-time');
+  localStorage.clear();
   while ($taskContainer.firstElementChild) {
     $taskContainer.firstElementChild.remove();
   }
