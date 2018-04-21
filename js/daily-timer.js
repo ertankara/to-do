@@ -13,7 +13,7 @@ $hours.addEventListener('keydown', handlerForModalInput);
 $minutes.addEventListener('keydown', handlerForModalInput);
 
 
-function handlerForModalInput() {
+function handlerForModalInput(event) {
   if (
     event.keyCode === 27 &&
     (document.activeElement === $hours ||
@@ -80,7 +80,11 @@ function startTimer(hours, minutes) {
   const minuteTarget = minutes * (60 * 1000);
   const targetMiliSeconds = hourTarget + minuteTarget;
 
-  let startingTime, timeLeft;
+  if (!localStorage.getItem('hour-storage') && !localStorage.getItem('minute-storage')) {
+    localStorage.setItem('hour-storage', hours);
+    localStorage.setItem('minute-storage', minutes);
+  }
+  let startingTime;
 
 
   // If there is any previous timer retrieve it
@@ -101,12 +105,11 @@ function startTimer(hours, minutes) {
   interval = setInterval(() => {
     // Get current time
     now = new Date().getTime();
-    // Get how much time left between now and ending date
-    timeLeft = endingTime - now;
-    // Update the timer with new values
-    updateTimer(timeLeft);
 
-    if (timeLeft <= 0) {
+    // Update the timer with new values
+    updateTimer(endingTime - now);
+
+    if (endingTime - now <= 0) {
       clearInterval(interval);
       checkState();
       localStorage.removeItem('starting-time');

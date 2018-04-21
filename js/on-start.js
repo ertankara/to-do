@@ -24,6 +24,9 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   if (localStorage && localStorage.getItem('starting-time')) {
-    startTimer();
+    startTimer(
+      Number(localStorage.getItem('hour-storage')),
+      Number(localStorage.getItem('minute-storage'))
+    );
   }
 });
