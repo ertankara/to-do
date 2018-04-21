@@ -3,11 +3,82 @@ const $modalSwitch = document.querySelector('#display-modal');
 const $modalHours = $modal.querySelector('#modal-hours');
 const $modalMinutes = $modal.querySelector('#modal-minutes');
 const $modalCloseButton = $modal.querySelector('#close-button');
+const $inputModal = document.querySelector('#input-modal');
+const $setTime = document.querySelector('#set-time');
+const $hours = $inputModal.querySelector('#hour-input');
+const $minutes = $inputModal.querySelector('#minute-input');
+
+
+$hours.addEventListener('keydown', handlerForModalInput);
+$minutes.addEventListener('keydown', handlerForModalInput);
+
+
+function handlerForModalInput() {
+  if (
+    event.keyCode === 27 &&
+    (document.activeElement === $hours ||
+      document.activeElement === $minutes)
+  ) {
+    $inputModal.style.display = 'none';
+    receiveInput();
+  }
+}
+
+
+
+function receiveInput() {
+  $inputModal.style.display = 'block';
+  inputsAreValid($hours.value, $minutes.value);
+  $hours.value = "";
+  $minutes.value = "";
+}
+
+$setTime.addEventListener('click', receiveInput);
+
+
+
+function inputsAreValid(hoursValue, minutesValue) {
+
+  if (
+    typeof Number(hoursValue) !== 'number' ||
+    typeof Number(minutesValue) !== 'number' ||
+    !(Number.isInteger(Number(hoursValue)) &&
+      Number.isInteger(Number(minutesValue)))
+  ) {
+    return
+  }
+  hoursValue = Number(hoursValue);
+  minutesValue = Number(minutesValue);
+
+  if (hoursValue > 99) {
+    hoursValue = 99;
+  } else if (hoursValue < 0) {
+    hoursValue = 0;
+  }
+
+  if (minutesValue > 99) {
+    minutesValue = 99;
+  } else if (minutesValue < 0) {
+    minutesValue = 1;
+  }
+
+  $inputModal.style.display = 'none';
+
+  // Conver val
+  startTimer(hoursValue, minutesValue);
+
+
+}
+
+
+
 
 
 let interval;
-function startTimer() {
-  const miliSecondsInADay = 86400 * 1000;
+function startTimer(hours, minutes) {
+  const hourTarget = hours * (60 * 60 * 1000);
+  const minuteTarget = minutes * (60 * 1000);
+  const targetMiliSeconds = hourTarget + minuteTarget;
 
   let startingTime, timeLeft;
 
@@ -22,7 +93,7 @@ function startTimer() {
   }
 
   // Calculate ending date
-  const endingTime = startingTime + miliSecondsInADay;
+  const endingTime = startingTime + targetMiliSeconds;
   let now = new Date().getTime();
   // Update the timer visually
   updateTimer(endingTime - now);

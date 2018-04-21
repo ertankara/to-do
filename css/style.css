@@ -51,7 +51,7 @@ body {
 
 /* MODAL BEGIN */
 
-.modal {
+.modal, .input-modal {
   display: none;
   position: fixed;
   z-index: 1;
@@ -92,7 +92,7 @@ body {
 
 
 .modal-close-button:hover {
-  color: #ccc;
+  color: #ff6600;
 }
 
 /* MODAL END */
@@ -206,3 +206,38 @@ body {
 }
 
 /* ADDED TASKS END */
+
+
+/* INPUT MODAL BEGIN */
+/*
+.input-modal {
+  display: block;
+} */
+
+.input-modal-content {
+  position: relative;
+  top: 10%;
+  width: 70%;
+  max-width: 400px;
+  height: 150px;
+  background-color: #eee;
+}
+
+
+.input-modal-time {
+  display: block;
+  margin: auto;
+  text-align: center;
+  padding: 5px;
+  width: 100px;
+  line-height: 0.8em;
+}
+
+
+.input-self {
+  width: 90px;
+  height: 35px;
+  text-align: center;
+}
+
+/* INPUT MODAL END */

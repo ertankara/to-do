@@ -51,7 +51,9 @@ function addTask() {
   }
 
   if (localStorage && !localStorage.getItem('starting-time')) {
-    startTimer();
+    // Display modal after entering nine tasks
+    if (JSON.parse(localStorage.getItem('all-tasks')).length === 9)
+      $inputModal.style.display = 'block';
   }
 }
 
