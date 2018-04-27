@@ -50,21 +50,17 @@ function inputsAreValid(hoursValue, minutesValue) {
   hoursValue = Number(hoursValue);
   minutesValue = Number(minutesValue);
 
-  if (hoursValue > 99) {
-    hoursValue = 99;
-  } else if (hoursValue < 0) {
+  if (hoursValue < 0) {
     hoursValue = 0;
   }
 
-  if (minutesValue > 99) {
-    minutesValue = 99;
-  } else if (minutesValue < 0) {
+  if (minutesValue < 0) {
     minutesValue = 1;
   }
 
   $inputModal.style.display = 'none';
 
-  // Conver val
+
   startTimer(hoursValue, minutesValue);
 
 
@@ -154,6 +150,11 @@ function checkState() {
 
 
 $modalSwitch.addEventListener('click', () => {
+  if (!localStorage.getItem('starting-time')) {
+    $inputModal.style.display = 'block';
+    return;
+  }
+
   $modal.style.display = 'block';
 });
 
@@ -164,7 +165,12 @@ $modalCloseButton.addEventListener('click', event => {
 
 
 document.addEventListener('keydown', event => {
-  if (event.keyCode === 27 && $modal.style.display === 'block') {
-    $modal.style.display = 'none';
+  if (event.keyCode === 27) {
+    // Close any open modal when escape button is pushed
+    if ($modal.style.display === 'block')
+      $modal.style.display = 'none';
+
+    if ($inputModal.style.display === 'block')
+      $inputModal.style.display = 'none';
   }
 });

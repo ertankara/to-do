@@ -1,3 +1,4 @@
+/*jshint esversion: 6 */
 const $addTaskInput = document.querySelector('#add-task');
 const $addTaskButton = document.querySelector('#add-task-button');
 const $taskContainer = document.querySelector('#task-container');
@@ -50,11 +51,11 @@ function addTask() {
     $renewListButton.style.display = 'block';
   }
 
-  if (localStorage && !localStorage.getItem('starting-time')) {
-    // Display modal after entering nine tasks
-    if (JSON.parse(localStorage.getItem('all-tasks')).length === 9)
-      $inputModal.style.display = 'block';
-  }
+  // if (localStorage && !localStorage.getItem('starting-time')) {
+  //   // Display modal after entering nine tasks
+  //   if (JSON.parse(localStorage.getItem('all-tasks')).length === 9)
+  //     $inputModal.style.display = 'block';
+  // }
 }
 
 
