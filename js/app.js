@@ -27,7 +27,7 @@
     },
 
     setCurrentId() {
-      // When array length it 0, adding one makes it human friendly
+      // When array length is 0, adding one makes it human friendly
       this.currentId = this.get().length + 1;
     },
 
@@ -45,17 +45,54 @@
 
     emptyStorage() {
       localStorage.clear();
+      this.init();
+    },
+
+    crossState(task) {
+      const tasks = model.get();
+      for (let i = 0; i < tasks.length; i++) {
+        if (task.id === tasks[i].id) {
+          if (tasks[i].isCrossed)
+            tasks[i].isCrossed = false;
+          else
+            tasks[i].isCrossed = true;
+        }
+      }
+      this.updateStorage(tasks)
     }
   };
 
   /* ============= CONTROL ============= */
   const control = {
     init() {
+      console.log('Awesome app being initialized!!!');
       model.init();
       taskListView.init();
-      addTaskView.init();
-      remainingTimeView.init();
       setTimeView.init();
+      addTaskView.init();
+      renewButtonView.init();
+      remainingTimeView.init();
+
+      // Add functionality for some keys
+      document.addEventListener('keydown', e => {
+        if (e.keyCode === 13 && document.activeElement === addTaskView.newTaskInputField) {
+          control.addNewTask(addTaskView.newTaskInputField.value);
+          addTaskView.render();
+        }
+        else if (
+          e.keyCode === 13 &&
+          (document.activeElement === setTimeView.hourInput ||
+            document.activeElement === setTimeView.minuteInput)
+        ) {
+          setTimeView.timeInputHandler();
+        }
+        else if (e.keyCode === 27 && remainingTimeView.timeModal.style.display === 'block') {
+          remainingTimeView.timeModal.style.display = 'none';
+        }
+        else if (e.keyCode === 27 && setTimeView.inputModal.style.display === 'block') {
+          setTimeView.inputModal.style.display = 'none';
+        }
+      });
     },
 
     getTaskList() {
@@ -70,26 +107,13 @@
       });
       // Update list visually after adding the task
       taskListView.render();
+      addTaskView.render();
+      renewButtonView.render();
     },
 
-    crossTask(task) {
-      const tasks = model.get();
-      for (let i = 0; i < tasks.length; i++) {
-        if (tasks[i].id === task.id) {
-          tasks[i].isCrossed = true;
-        }
-      }
-      model.updateStorage(tasks);
-    },
-
-    uncrossTask(task) {
-      const tasks = model.get();
-      for (let i = 0; i < tasks.length; i++) {
-        if (tasks[i].id === task.id) {
-          tasks[i].isCrossed = false;
-        }
-      }
-      model.updateStorage(tasks);
+    changeCrossState(task) {
+      model.crossState(task);
+      taskListView.render();
     },
 
     getTime() {
@@ -111,6 +135,8 @@
 
     clearStorage() {
       model.emptyStorage();
+      taskListView.render();
+      renewButtonView.render();
     }
   };
 
@@ -126,12 +152,7 @@
             e.target.textContent === (allTasks[i].id) +
             '- ' + allTasks[i].task
           ) {
-            if (!allTasks[i].isCrossed) {
-              control.crossTask(allTasks[i]);
-            } else {
-              control.uncrossTask(allTasks[i]);
-            }
-            this.render();
+            control.changeCrossState(allTasks[i]);
             break;
           }
         }
@@ -212,8 +233,10 @@
         const hours = Math.floor(seconds / (60 * 60));
         const hoursExtracted = seconds % (60 * 60);
         const minutes = Math.floor(hoursExtracted / 60);
+        //if (targetTime - currentTime > 0) {
         this.remainingHours.textContent = String(hours).padStart(2, '0');
         this.remaningMinutes.textContent = String(minutes).padStart(2, '0');
+        //}
 
         // End condition
         if (targetTime - currentTime <= 0) {
@@ -236,14 +259,17 @@
           if (!isFailed) {
             alert('Successfully completed all tasks!');
           }
+          control.clearStorage();
+          return;
         }
-        control.clearStorage();
+
       };
-
-
+      setTimeout(() => {
+        calculateReaminingTime();
+      }, 200)
       interval = setInterval(() => calculateReaminingTime(), 6000);
       // For the instant view for the modal
-      calculateReaminingTime();
+
 
       // Check remaining time every six seconds
     }
@@ -256,8 +282,6 @@
       this.hourInput = document.querySelector('#hour-input');
       this.minuteInput = document.querySelector('#minute-input');
       this.setTimeButton = document.querySelector('#set-time');
-
-
 
       this.timeInputHandler = () => {
         if (this.hourInput.value === '') {
@@ -274,7 +298,6 @@
             Number(this.minuteInput.value)
           )
         ) {
-          console.log('Over and out');
           return;
         }
 
@@ -292,33 +315,40 @@
       this.minuteInput.value = '';
       this.inputModal.style.display = 'none';
     }
-  }
+  };
 
-  // Add functionality for 'enter' and 'escape' buttons
-  document.addEventListener('keydown', e => {
-    if (e.keyCode === 13 && document.activeElement === addTaskView.newTaskInputField) {
-      control.addNewTask(addTaskView.newTaskInputField.value);
-      addTaskView.render();
-    }
-    else if (
-      e.keyCode === 13 &&
-      (document.activeElement === setTimeView.hourInput ||
-        document.activeElement === setTimeView.minuteInput)
-    ) {
-      setTimeView.timeInputHandler();
-    }
-    else if (e.keyCode === 27 && remainingTimeView.timeModal.style.display === 'block') {
-      remainingTimeView.timeModal.style.display = 'none';
-    }
-    else if (e.keyCode === 27 && setTimeView.inputModal.style.display === 'block') {
-      setTimeView.inputModal.style.display = 'none';
-    }
-  });
+  /* ============= RENEW BUTTON VIEW ============= */
+  const renewButtonView = {
+    init() {
+      this.renewButton = document.querySelector('#renew-list-button');
+      this.renewButton.addEventListener('click', () => {
+        control.clearStorage();
+        this.renewButton.style.display = 'none';
+      });
+      this.render();
+    },
 
+    render() {
+      const tasks = control.getTaskList();
+      console.log(tasks.length);
+      if (tasks.length > 0) {
+        this.renewButton.style.display = 'block';
+      }
+      else {
+        this.renewButton.style.display = 'none';
+      }
+    }
+  };
+
+  // Check input numbers if they are valid
   function validateNumbers(firstInput, secondInput) {
     if (
-      (!Number.isNaN(firstInput) && typeof firstInput === 'number') &&
-      (!Number.isNaN(secondInput) && typeof secondInput === 'number')
+      (!Number.isNaN(firstInput) &&
+        typeof firstInput === 'number' &&
+        Number.isInteger(firstInput)) &&
+      (!Number.isNaN(secondInput) &&
+        typeof secondInput === 'number' &&
+        Number.isInteger(secondInput))
     ) {
       return true;
     }
@@ -327,20 +357,18 @@
 
   // Polyfill for padStart function
   if (!(''.padStart)) {
-    String.prototype.padStart = function(numberOfCharactersToFill, character) {
-      let str = '';
+    String.prototype.padStart = function (numberOfCharactersToFill, character) {
       if (this.length < numberOfCharactersToFill) {
+        let str = '';
         let times = numberOfCharactersToFill - this.length;
         for (let i = 0; i < times; i++) {
           str += character;
         }
-        return str + this;
+        return String(str + this);
       }
-        return this;
+      return String(this);
     };
   }
 
   control.init();
 })();
-
-// 330
