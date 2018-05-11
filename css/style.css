@@ -24,6 +24,10 @@
     margin-right: auto;
     margin-left: auto;
   }
+
+  body .added-tasks-cover {
+    max-height: 500px;
+  }
 }
 
 
@@ -104,6 +108,7 @@ body {
 
 .center-common {
   position: relative;
+  max-width: 400px;
   margin: auto;
 }
 
@@ -170,8 +175,7 @@ body {
 .added-tasks-cover {
   top: 12%;
   width: 90%;
-  min-height: 55vh;
-  max-height: 400px;
+  max-height: 300px;
   padding: 35px;
   background: linear-gradient(#ccc, #fff);
   overflow-y: auto;
@@ -201,7 +205,6 @@ body {
   background-color: #d33434;
   color: #fcfcfc;
   width: 90%;
-  max-width: 500px;
   top: 10%;
 }
 
@@ -209,35 +212,43 @@ body {
 
 
 /* INPUT MODAL BEGIN */
-/*
-.input-modal {
-  display: block;
-} */
 
 .input-modal-content {
   position: relative;
   top: 10%;
   width: 70%;
   max-width: 400px;
-  height: 150px;
+  height: 200px;
   background-color: #eee;
 }
 
 
+
 .input-modal-time {
-  display: block;
   margin: auto;
   text-align: center;
   padding: 5px;
-  width: 100px;
   line-height: 0.8em;
+  font-size: 1.2em;
+  color: #444;
 }
 
 
+.input-modal-time:first-of-type > .input-self {
+  margin-left: 65px;
+}
+
 .input-self {
+  margin-left: 50px;
   width: 90px;
   height: 35px;
   text-align: center;
+}
+
+button.input-modal-time {
+  position: absolute;
+  bottom: 15px;
+  left: 35%;
 }
 
 /* INPUT MODAL END */

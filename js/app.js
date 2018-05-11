@@ -359,8 +359,8 @@
   if (!(''.padStart)) {
     String.prototype.padStart = function (numberOfCharactersToFill, character) {
       if (this.length < numberOfCharactersToFill) {
-        let str = '';
-        let times = numberOfCharactersToFill - this.length;
+        let str = '',
+            times = numberOfCharactersToFill - this.length;
         for (let i = 0; i < times; i++) {
           str += character;
         }

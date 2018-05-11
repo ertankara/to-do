@@ -8,19 +8,23 @@
   <title>Todo List</title>
 </head>
 <body>
+
   <div class="input-modal" id="input-modal">
     <div class="input-modal-content center-common">
       <div class="input-modal-time">
-        <label for="hour-input">Hours</label>
+        <label for="hour-input">Hours:</label>
         <input class="input-self" type="text" name="hour"   id="hour-input">
       </div>
+      <br>
       <div class="input-modal-time">
-        <label for="minute-input">Minutes</label>
+        <label for="minute-input">Minutes:</label>
         <input class="input-self" type="text" name="minute" id="minute-input">
       </div>
+      <br>
       <button class="input-modal-time" id="set-time">Start Timer</button>
     </div>
   </div>
+
   <!-- MODAL -->
   <div class="modal">
     <div class="modal-content center-common">
@@ -52,9 +56,6 @@
   </div>
   <!-- ADDED TASKS END -->
 
-  <script src="js/on-start.js"></script>
-  <script src="js/local-storage.js"></script>
-  <script src="js/main.js"></script>
-  <script src="js/daily-timer.js"></script>
+  <script src="js/app.js"></script>
 </body>
 </html>
